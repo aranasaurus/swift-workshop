@@ -16,6 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        if DataStore.loadActivities().count == 0 {
+            if !DataStore.loadDefaultActivities() {
+                println( "Failed to load default activities." )
+            }
+        }
         return true
     }
 

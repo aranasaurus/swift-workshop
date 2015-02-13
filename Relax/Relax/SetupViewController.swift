@@ -12,13 +12,14 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
 
-    var activities: [Activity]?
+    var activities: [Activity] {
+        return DataStore.loadActivities()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        activities = DataStore.loadActivities()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,13 +45,14 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
     // MARK: UITableViewDataSource
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activities?.count ?? 0
+        return activities.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("setupCell") as UITableViewCell
 
-        if let activity = activities?[indexPath.row] {
+        if indexPath.row < activities.count {
+            let activity = activities[indexPath.row]
             cell.textLabel?.text = activity.title
         }
 
@@ -58,14 +60,17 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return indexPath.row < activities?.count
+        return indexPath.row < activities.count
     }
 
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            if let activity = activities?[indexPath.row] {
+            if indexPath.row < activities.count {
+                let activity = activities[indexPath.row]
                 DataStore.removeActivity(activity)
-                activities = DataStore.loadActivities()
+                tableView.beginUpdates()
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.endUpdates()
             }
         }
     }

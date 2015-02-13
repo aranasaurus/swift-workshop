@@ -11,84 +11,83 @@ import Realm
 
 class DataStore {
 
-    // MARK: Activities
+    class func toArray<T: RLMObject>(s: RLMResults) -> [T] {
+        var results = [T]()
 
-    class func activitiesPath() -> String {
-        return NSBundle.mainBundle().pathForResource("DefaultActivities", ofType: "plist")!
-    }
-
-    class func loadActivities() -> [Activity] {
-        var activities = Activity.allObjects()
-        if activities.count == 0 {
-            let realm = RLMRealm.defaultRealm()
-            let defaultActivities = loadDefaultActivities()
-            realm.beginWriteTransaction()
-            realm.addObjects(defaultActivities)
-            realm.commitWriteTransaction()
-        }
-
-        activities = Activity.allObjects()
-        var results = [Activity]()
-        for i in 0 ..< activities.count {
-            let a = activities.objectAtIndex(i) as Activity
+        for i in 0 ..< s.count {
+            let a = s.objectAtIndex(i) as T
             results.append(a)
         }
 
         return results
     }
 
-    class func loadDefaultActivities() -> [Activity] {
+    // MARK: Activities
+
+    class func activitiesPath() -> String {
+        return NSBundle.mainBundle().pathForResource("DefaultActivities", ofType: "plist")!
+    }
+
+    class var realm: RLMRealm {
+        return RLMRealm.defaultRealm()
+    }
+
+    class func loadActivities() -> [Activity] {
+        return toArray(Activity.allObjects())
+    }
+
+    class func loadDefaultActivities() -> Bool {
         println( "Loading default activities from \(activitiesPath()).")
         if let arr = NSArray(contentsOfFile: activitiesPath()) as? [AnyObject] {
-            return arr.map({ (t:AnyObject?) -> Activity in
+            let defs = arr.map({ (t:AnyObject?) -> Activity in
                 if let title = t as? String {
                     return Activity(title: title)
                 }
                 return Activity(title: "")
             })
+            
+            realm.beginWriteTransaction()
+            realm.addObjects(defs)
+            realm.commitWriteTransaction()
+            return true
         }
-        return [Activity]()
+        
+        return false
     }
-
+    
     class func addActivity(activity: Activity) {
-        // TODO: Implement me!
-        println("addActivity called... but it's not implemented yet!")
+        realm.beginWriteTransaction()
+        realm.addObject(activity)
+        realm.commitWriteTransaction()
     }
-
+    
     class func removeActivity(activity: Activity) {
-        // TODO: Implement me!
-        println("removeActivity called... but it's not implemented yet!")
+        realm.beginWriteTransaction()
+        realm.deleteObject(activity)
+        realm.commitWriteTransaction()
     }
-
-    class func currentActivity() -> Activity {
-        // TODO: Implement me!
-        assert(false, "Unimplemented")
+    
+    class var currentActivityIndex: Int {
+        get {
+            return NSUserDefaults.standardUserDefaults().integerForKey("currentActivityIndex") ?? -1
+        }
+        set {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "currentActivityIndex")
+        }
     }
-
-    class func setCurrentActivity(activity: Activity) {
-        // TODO: Implement me!
-        println("setCurrentActivity called... but it's not implemented yet!")
-    }
-
-
+    
+    
     // MARK: History Items
-
-    class func historyItemsPath() -> String {
-        return NSBundle.mainBundle().pathForResource("HistoryItems", ofType: "plist")!
-    }
-
+    
     class func loadHistoryItems() -> [HistoryItem] {
-        // TODO: Implement me!
-        println("loadHistoryItems called... but it's not implemented yet!")
-
-        return [HistoryItem]()
+        return toArray(HistoryItem.allObjects())
     }
-
+    
     class func addHistoryItem(item: HistoryItem) {
         // TODO: Implement me!
         println("addHistoryItem called... but it's not implemented yet!")
     }
-
+    
     class func removeHistoryItem(item: HistoryItem) {
         // TODO: Implement me!
         println("removeHistoryItem called... but it's not implemented yet!")

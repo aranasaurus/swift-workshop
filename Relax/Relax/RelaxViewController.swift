@@ -12,15 +12,18 @@ class RelaxViewController: UIViewController {
 
     @IBOutlet weak var activityTitleLabel: UILabel!
 
-    var allActivities = [Activity]()
+    var allActivities: [Activity] {
+        return DataStore.loadActivities()
+    }
     var currentActivityIndex: Int = 0 {
         didSet {
-            if self.currentActivityIndex >= allActivities.count {
-                self.currentActivityIndex = 0
+            if currentActivityIndex >= allActivities.count || currentActivityIndex < 0 {
+                nextActivity()
                 return
             }
+
             if activityTitleLabel != nil {
-                activityTitleLabel.text = allActivities[self.currentActivityIndex].title
+                activityTitleLabel.text = allActivities[currentActivityIndex].title
             }
         }
     }
@@ -29,8 +32,12 @@ class RelaxViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        allActivities = DataStore.loadActivities()
-        nextActivity()
+        currentActivityIndex = DataStore.currentActivityIndex
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        currentActivityIndex = DataStore.currentActivityIndex
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +50,7 @@ class RelaxViewController: UIViewController {
     }
 
     @IBAction func beginActivity() {
-        DataStore.setCurrentActivity(allActivities[currentActivityIndex])
+        DataStore.currentActivityIndex = currentActivityIndex
 
         // TODO: Implement me!
         println( "beginActivity called... but it's not implemented yet!")
