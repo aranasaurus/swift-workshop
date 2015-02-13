@@ -14,6 +14,7 @@
 		948482201A8D6DE700E67D12 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9484821F1A8D6DE700E67D12 /* Realm.framework */; };
 		948482221A8D6DF600E67D12 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 948482211A8D6DF600E67D12 /* libc++.dylib */; };
 		948482231A8D6DFE00E67D12 /* Realm.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 9484821F1A8D6DE700E67D12 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		948482251A8DFC7200E67D12 /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948482241A8DFC7200E67D12 /* RLMSupport.swift */; };
 		9488E66A1A86635400F0E383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E6691A86635400F0E383 /* AppDelegate.swift */; };
 		9488E66C1A86635400F0E383 /* RelaxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E66B1A86635400F0E383 /* RelaxViewController.swift */; };
 		9488E6711A86635400F0E383 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9488E6701A86635400F0E383 /* Images.xcassets */; };
@@ -57,6 +58,7 @@
 		9407C5801A89701D00953241 /* HistoryItems.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HistoryItems.plist; sourceTree = "<group>"; };
 		9484821F1A8D6DE700E67D12 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		948482211A8D6DF600E67D12 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		948482241A8DFC7200E67D12 /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
 		9488E6641A86635400F0E383 /* Relax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Relax.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9488E6681A86635400F0E383 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9488E6691A86635400F0E383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 		948482181A8D6BFC00E67D12 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				948482241A8DFC7200E67D12 /* RLMSupport.swift */,
 				948482211A8D6DF600E67D12 /* libc++.dylib */,
 				9484821F1A8D6DE700E67D12 /* Realm.framework */,
 			);
@@ -312,6 +315,7 @@
 			files = (
 				9407C5781A89633500953241 /* HistoryTableViewCell.swift in Sources */,
 				9407C57F1A896A6400953241 /* DataStore.swift in Sources */,
+				948482251A8DFC7200E67D12 /* RLMSupport.swift in Sources */,
 				94F839E71A869BE8003DF242 /* Activity.swift in Sources */,
 				9407C57A1A8964A200953241 /* HistoryItem.swift in Sources */,
 				9488E66C1A86635400F0E383 /* RelaxViewController.swift in Sources */,
