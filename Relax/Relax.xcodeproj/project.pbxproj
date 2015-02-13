@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9407C5781A89633500953241 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9407C5771A89633500953241 /* HistoryTableViewCell.swift */; };
 		9407C57A1A8964A200953241 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9407C5791A8964A200953241 /* HistoryItem.swift */; };
-		9407C57F1A896A6400953241 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9407C57E1A896A6400953241 /* DataStore.swift */; };
 		9407C5811A89701D00953241 /* HistoryItems.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9407C5801A89701D00953241 /* HistoryItems.plist */; };
 		948482201A8D6DE700E67D12 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9484821F1A8D6DE700E67D12 /* Realm.framework */; };
 		948482221A8D6DF600E67D12 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 948482211A8D6DF600E67D12 /* libc++.dylib */; };
@@ -54,7 +53,6 @@
 /* Begin PBXFileReference section */
 		9407C5771A89633500953241 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		9407C5791A8964A200953241 /* HistoryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
-		9407C57E1A896A6400953241 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		9407C5801A89701D00953241 /* HistoryItems.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HistoryItems.plist; sourceTree = "<group>"; };
 		9484821F1A8D6DE700E67D12 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		948482211A8D6DF600E67D12 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -193,7 +191,6 @@
 				9407C5801A89701D00953241 /* HistoryItems.plist */,
 				94F839E61A869BE8003DF242 /* Activity.swift */,
 				9407C5791A8964A200953241 /* HistoryItem.swift */,
-				9407C57E1A896A6400953241 /* DataStore.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -314,7 +311,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9407C5781A89633500953241 /* HistoryTableViewCell.swift in Sources */,
-				9407C57F1A896A6400953241 /* DataStore.swift in Sources */,
 				948482251A8DFC7200E67D12 /* RLMSupport.swift in Sources */,
 				94F839E71A869BE8003DF242 /* Activity.swift in Sources */,
 				9407C57A1A8964A200953241 /* HistoryItem.swift in Sources */,

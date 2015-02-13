@@ -19,5 +19,14 @@ class Activity: RLMObject {
         self.init()
         self.title = title
     }
+    
+    class var currentActivityIndex: Int {
+        get {
+            return NSUserDefaults.standardUserDefaults().integerForKey("currentActivityIndex") ?? -1
+        }
+        set {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "currentActivityIndex")
+        }
+    }
 }
 

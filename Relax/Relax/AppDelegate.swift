@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Realm
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +17,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        if DataStore.loadActivities().count == 0 {
-            if !DataStore.loadDefaultActivities() {
+        let realm = RLMRealm.defaultRealm()
+        if Activity.allObjects().count == 0 {
+            let activitiesPath = NSBundle.mainBundle().pathForResource("DefaultActivities", ofType: "plist")!
+            println( "Loading default activities from \(activitiesPath).")
+            if let arr = NSArray(contentsOfFile: activitiesPath) as? [AnyObject] {
+                let defs = arr.map({ (t:AnyObject?) -> Activity in
+                    if let title = t as? String {
+                        return Activity(title: title)
+                    }
+                    return Activity(title: "")
+                })
+                
+                realm.beginWriteTransaction()
+                realm.addObjects(defs)
+                realm.commitWriteTransaction()
+            } else {
                 println( "Failed to load default activities." )
             }
         }

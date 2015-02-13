@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import Realm
 
 class HistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    var items = [HistoryItem]()
+    var items: RLMResults {
+        return HistoryItem.allObjects()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-
-        items = DataStore.loadHistoryItems()
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,8 +48,8 @@ class HistoryViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("historyCell", forIndexPath: indexPath) as HistoryTableViewCell
 
-        if indexPath.row < items.count {
-            let item = items[indexPath.row]
+        if indexPath.row < Int(items.count) {
+            let item = items[UInt(indexPath.row)] as HistoryItem
             cell.configureWithHistoryItem(item)
         }
 

@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Realm
 
 class SetupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
-    var activities: [Activity] {
-        return DataStore.loadActivities()
+    var activities: RLMResults {
+        return Activity.allObjects()
     }
 
     override func viewDidLoad() {
@@ -42,7 +43,12 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in }
         let addAction = UIAlertAction(title: "Add", style: .Default) { (_) in
             let textField = alertController.textFields![0] as UITextField
-            DataStore.addActivity(Activity(title: textField.text))
+            let activity = Activity(title: textField.text)
+            let realm = RLMRealm.defaultRealm()
+            realm.beginWriteTransaction()
+            Activity.createInDefaultRealmWithObject(activity)
+            realm.commitWriteTransaction()
+
             self.tableView.beginUpdates()
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
             self.tableView.endUpdates()
@@ -64,14 +70,14 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
     // MARK: UITableViewDataSource
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activities.count
+        return Int(activities.count)
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("setupCell") as UITableViewCell
 
-        if indexPath.row < activities.count {
-            let activity = activities[indexPath.row]
+        if indexPath.row < Int(activities.count) {
+            let activity = activities[UInt(indexPath.row)] as Activity
             cell.textLabel?.text = activity.title
         }
 
@@ -79,14 +85,18 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return indexPath.row < activities.count
+        return indexPath.row < Int(activities.count)
     }
 
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            if indexPath.row < activities.count {
-                let activity = activities[indexPath.row]
-                DataStore.removeActivity(activity)
+            if indexPath.row < Int(activities.count) {
+                let activity = activities[UInt(indexPath.row)] as Activity
+                let realm = activity.realm
+                realm.beginWriteTransaction()
+                realm.deleteObject(activity)
+                realm.commitWriteTransaction()
+
                 tableView.beginUpdates()
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 tableView.endUpdates()
@@ -102,7 +112,10 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
         let saveAction = UIAlertAction(title: "Save", style: .Default) { (_) in
             let textField = alertController.textFields![0] as UITextField
 
-            DataStore.updateActivity(self.activities[indexPath.row], withTitle: textField.text)
+            let activity = self.activities[UInt(indexPath.row)] as Activity
+            activity.realm.beginWriteTransaction()
+            activity.title = textField.text
+            activity.realm.commitWriteTransaction()
 
             self.tableView.beginUpdates()
             self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
@@ -111,7 +124,7 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
 
         alertController.addTextFieldWithConfigurationHandler { (textField) in
             textField.placeholder = "Title"
-            textField.text = self.activities[indexPath.row].title
+            textField.text = self.activities[UInt(indexPath.row)].title
 
             NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: NSOperationQueue.mainQueue()) { (notification) in
                 saveAction.enabled = textField.text != ""
