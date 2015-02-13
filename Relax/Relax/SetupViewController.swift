@@ -38,8 +38,27 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     */
     @IBAction func addActivity(sender: UIBarButtonItem) {
-        // TODO: Implement me!
-        println("addActivity called... but it's not implemented yet!")
+        let alertController = UIAlertController(title: "Add Activity", message: nil, preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in }
+        let addAction = UIAlertAction(title: "Add", style: .Default) { (_) in
+            let textField = alertController.textFields![0] as UITextField
+            DataStore.addActivity(Activity(title: textField.text))
+            self.tableView.beginUpdates()
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            self.tableView.endUpdates()
+        }
+
+        alertController.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "Title"
+
+            NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: NSOperationQueue.mainQueue()) { (notification) in
+                addAction.enabled = textField.text != ""
+            }
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(addAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 
     // MARK: UITableViewDataSource
@@ -76,5 +95,32 @@ class SetupViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     // MARK: UITableViewDelegate
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let alertController = UIAlertController(title: "Edit Activity", message: nil, preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in }
+        let saveAction = UIAlertAction(title: "Save", style: .Default) { (_) in
+            let textField = alertController.textFields![0] as UITextField
+
+            DataStore.updateActivity(self.activities[indexPath.row], withTitle: textField.text)
+
+            self.tableView.beginUpdates()
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            self.tableView.endUpdates()
+        }
+
+        alertController.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "Title"
+            textField.text = self.activities[indexPath.row].title
+
+            NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: NSOperationQueue.mainQueue()) { (notification) in
+                saveAction.enabled = textField.text != ""
+            }
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
 
 }

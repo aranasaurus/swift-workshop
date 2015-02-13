@@ -66,6 +66,14 @@ class DataStore {
         realm.deleteObject(activity)
         realm.commitWriteTransaction()
     }
+
+    // This is not ideal, but without it we'd have to put the realm begin/commit transaction calls in the VCs, which is
+    // also not ideal.
+    class func updateActivity(activity: Activity, withTitle title: String) {
+        realm.beginWriteTransaction()
+        activity.title = title
+        realm.commitWriteTransaction()
+    }
     
     class var currentActivityIndex: Int {
         get {
