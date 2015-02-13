@@ -7,8 +7,17 @@
 //
 
 import Foundation
+import Realm
 
-struct Activity {
-    let title: String
+class Activity: RLMObject {
+    dynamic var title = ""
+    var historyItems: [HistoryItem] {
+        return linkingObjectsOfClass("HistoryItem", forProperty: "activity") as [HistoryItem]
+    }
+
+    convenience init(title: String) {
+        self.init()
+        self.title = title
+    }
 }
 

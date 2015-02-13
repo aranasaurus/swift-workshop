@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Realm
 
 class DataStore {
 
@@ -17,6 +18,27 @@ class DataStore {
     }
 
     class func loadActivities() -> [Activity] {
+        var activities = Activity.allObjects()
+        if activities.count == 0 {
+            let realm = RLMRealm.defaultRealm()
+            let defaultActivities = loadDefaultActivities()
+            realm.beginWriteTransaction()
+            realm.addObjects(defaultActivities)
+            realm.commitWriteTransaction()
+        }
+
+        activities = Activity.allObjects()
+        var results = [Activity]()
+        for i in 0 ..< activities.count {
+            let a = activities.objectAtIndex(i) as Activity
+            results.append(a)
+        }
+
+        return results
+    }
+
+    class func loadDefaultActivities() -> [Activity] {
+        println( "Loading default activities from \(activitiesPath()).")
         if let arr = NSArray(contentsOfFile: activitiesPath()) as? [AnyObject] {
             return arr.map({ (t:AnyObject?) -> Activity in
                 if let title = t as? String {

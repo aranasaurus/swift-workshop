@@ -11,6 +11,9 @@
 		9407C57A1A8964A200953241 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9407C5791A8964A200953241 /* HistoryItem.swift */; };
 		9407C57F1A896A6400953241 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9407C57E1A896A6400953241 /* DataStore.swift */; };
 		9407C5811A89701D00953241 /* HistoryItems.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9407C5801A89701D00953241 /* HistoryItems.plist */; };
+		948482201A8D6DE700E67D12 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9484821F1A8D6DE700E67D12 /* Realm.framework */; };
+		948482221A8D6DF600E67D12 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 948482211A8D6DF600E67D12 /* libc++.dylib */; };
+		948482231A8D6DFE00E67D12 /* Realm.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 9484821F1A8D6DE700E67D12 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9488E66A1A86635400F0E383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E6691A86635400F0E383 /* AppDelegate.swift */; };
 		9488E66C1A86635400F0E383 /* RelaxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E66B1A86635400F0E383 /* RelaxViewController.swift */; };
 		9488E6711A86635400F0E383 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9488E6701A86635400F0E383 /* Images.xcassets */; };
@@ -33,11 +36,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9484821D1A8D6C6400E67D12 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				948482231A8D6DFE00E67D12 /* Realm.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9407C5771A89633500953241 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		9407C5791A8964A200953241 /* HistoryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		9407C57E1A896A6400953241 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		9407C5801A89701D00953241 /* HistoryItems.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HistoryItems.plist; sourceTree = "<group>"; };
+		9484821F1A8D6DE700E67D12 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		948482211A8D6DF600E67D12 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		9488E6641A86635400F0E383 /* Relax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Relax.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9488E6681A86635400F0E383 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9488E6691A86635400F0E383 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				948482221A8D6DF600E67D12 /* libc++.dylib in Frameworks */,
+				948482201A8D6DE700E67D12 /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,12 +118,22 @@
 			name = Setup;
 			sourceTree = "<group>";
 		};
+		948482181A8D6BFC00E67D12 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				948482211A8D6DF600E67D12 /* libc++.dylib */,
+				9484821F1A8D6DE700E67D12 /* Realm.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9488E65B1A86635400F0E383 = {
 			isa = PBXGroup;
 			children = (
 				9488E6661A86635400F0E383 /* Relax */,
 				9488E67C1A86635400F0E383 /* RelaxTests */,
 				9488E6651A86635400F0E383 /* Products */,
+				948482181A8D6BFC00E67D12 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -186,6 +217,7 @@
 				9488E6601A86635400F0E383 /* Sources */,
 				9488E6611A86635400F0E383 /* Frameworks */,
 				9488E6621A86635400F0E383 /* Resources */,
+				9484821D1A8D6C6400E67D12 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -402,6 +434,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Relax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -412,6 +448,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Relax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

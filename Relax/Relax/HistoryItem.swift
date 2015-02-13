@@ -7,24 +7,11 @@
 //
 
 import Foundation
+import Realm
 
-class HistoryItem: NSCoding {
-    let activity: Activity
-    let rating: Double
-    let comments: String
-    let loggedAt: NSDate
-
-    required init(coder aDecoder: NSCoder) {
-        // TODO: Replace all of this code with an actual implementation
-        assert(false, "Unimplemented")
-        self.activity = Activity(title: "Unimplemented")
-        self.rating = 0
-        self.comments = ""
-        self.loggedAt = NSDate()
-    }
-
-    func encodeWithCoder(aCoder: NSCoder) {
-        // TODO: Implement me!
-        assert(false, "Unimplemented")
-    }
+class HistoryItem: RLMObject {
+    dynamic var activity: Activity = Activity()
+    dynamic var rating: Double = 0.0
+    dynamic var comments: String = ""
+    dynamic var loggedAt: NSDate = NSDate()
 }
